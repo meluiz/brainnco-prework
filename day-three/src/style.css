@@ -23,14 +23,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 24px;
   position: relative;
   margin-left: auto;
   margin-right: auto;
   text-align: left;
 }
 
-.form div {
+.form .group {
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .form input {
@@ -52,20 +55,20 @@
   border: 2px solid #5865F2;
 }
 
-
-.form input:valid ~ label {
+.form input:valid ~ label.floating {
   color: #5865F2;
 }
 
-.form input:focus ~ label,
-.form input:valid ~ label {
+
+.form input:focus ~ label.floating,
+.form input:valid ~ label.floating {
   top: -2px;
   font-size: 14px;
   padding: 0 4px;
   background-color: white;
 }
 
-.form label {
+.form label.floating {
   position: absolute;
   top: 50%; left: 8px;
   transform: translateY(-50%);
@@ -75,4 +78,38 @@
   font-family: Arial, Helvetica, sans-serif;
   transition: all 300ms ease;
   color: #7a7a7a;
+}
+
+.form select {
+  width: 276px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding: 14px 8px;
+  border-radius: 8px;
+  border: 1px solid #d3d3d3;
+  transition: all 150ms ease;
+}
+
+.form label {
+  cursor: text;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  transition: all 300ms ease;
+  color: #7a7a7a;
+  margin-bottom: 4px;
+}
+
+.form div > div.colors {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+
+}
+
+.form div > div.colors span {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  display: inline-block;
 }
