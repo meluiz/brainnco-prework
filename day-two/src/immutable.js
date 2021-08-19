@@ -7,7 +7,7 @@ const john = {
 
 const jane = {
   ...john,
-  hobbies =  [ ...john.hobbies, 'MuayThai', 'Programming' ]
+  hobbies:  [ ...john.hobbies, 'MuayThai', 'Programming' ]
 }
 
 console.log('John:', john)
