@@ -43,6 +43,13 @@
   gap: 14px;
 }
 
+.form-error {
+  color: #EE0000;
+  font-style: italic;
+  font-weight: 600;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .form .group {
   position: relative;
   display: flex;
