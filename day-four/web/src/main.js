@@ -1,17 +1,102 @@
+
 const baseURL = 'http://localhost:3333/cars'
+
+const form = document.querySelector('[data-id=add-car]')
 const table = document.querySelector('[data-id=table]')
 
-fetch(baseURL)
+const createTableRow = (fields) => {
+  const tr = document.createElement('tr')
+
+  if (fields.length === 0) {
+
+    const td = document.createElement('td')
+
+    td.className = 'table-empty'
+    td.textContent = 'Nenhum carro encontrado'
+    td.colSpan = 5
+    tr.appendChild(td)
+
+  } else {
+    fields.forEach((field) => {
+      const td = document.createElement('td')
+      td.className = `table-${field.name}`
+
+      if (field.name === 'color') {
+        const span = document.createElement('span')
+        span.style.backgroundColor = `${field.value}`
+        td.appendChild(span)
+      } else if (field.name === 'image') {
+        console.log(field)
+        const img = document.createElement('img')
+        img.src = `${field.value}`
+        td.appendChild(img)
+      } else {
+        td.textContent = field.value
+      }
+
+      tr.appendChild(td)
+    })
+  }
+
+  return tr
+}
+
+const renderTableRow = (data) => {
+  table.innerHTML = ''
+
+  if (data.length === 0) {
+    const tableRow = createTableRow(data)
+    table.appendChild(tableRow)
+  } else {
+    data.forEach((car) => {
+      const fields = [
+        { name: 'color', value: car.color },
+        { name: 'image', value: car.image },
+        { name: 'brandModel', value: car.brandModel },
+        { name: 'year', value: car.year },
+        { name: 'plate', value: car.plate }
+      ]
+
+      const tableRow = createTableRow(fields)
+      table.appendChild(tableRow)
+    })
+  }
+}
+
+const getCars = () => {
+  return fetch(baseURL)
+    .then((response) => response.json())
+    .then((response) => renderTableRow(response))
+}
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault()
+
+  const target = event.target
+  const fields = {
+    image: target.elements.image,
+    brandModel: target.elements.brandModel,
+    year: target.elements.year,
+    plate: target.elements.plate,
+    color: target.elements.color
+  }
+
+  fetch(baseURL, {
+    method: 'post',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      image: fields.image.value,
+      brandModel: fields.brandModel.value,
+      year: parseInt(fields.year.value),
+      plate: fields.plate.value,
+      color: fields.color.value
+    })
+  })
   .then((response) => response.json())
   .then((response) => {
-    table.innerHTML = ''
-    if (response.length === 0) {
-      const tr = document.createElement('tr')
-      const td = document.createElement('td')
-      td.className = 'table-empty'
-      td.colSpan = 5
-      td.textContent = "Nenhum carro encontrado"
-      tr.appendChild(td)
-      table.appendChild(tr)
-    }
+    if (!response.error) getCars()
   })
+
+})
+
+getCars()
