@@ -14,7 +14,7 @@ const createTableRow = (fields) => {
 
     td.className = 'table-empty'
     td.textContent = 'Nenhum carro encontrado'
-    td.colSpan = 5
+    td.colSpan = 6
     tr.appendChild(td)
 
   } else {
@@ -27,7 +27,6 @@ const createTableRow = (fields) => {
         span.style.backgroundColor = `${field.value}`
         td.appendChild(span)
       } else if (field.name === 'image') {
-        console.log(field)
         const img = document.createElement('img')
         img.src = `${field.value}`
         td.appendChild(img)
