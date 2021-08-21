@@ -5,6 +5,7 @@ const form = document.querySelector('[data-id=add-car]')
 const table = document.querySelector('[data-id=table]')
 const error = document.querySelector('[data-id=form-error]')
 
+
 const createTableRow = (fields) => {
   const tr = document.createElement('tr')
 
@@ -18,10 +19,14 @@ const createTableRow = (fields) => {
     tr.appendChild(td)
 
   } else {
+    let id = fields.find((field) => field.name === 'plate').value
+
     fields.forEach((field) => {
       const td = document.createElement('td')
+
       td.className = `table-${field.name}`
 
+      if (field.name === 'plate') id = field.value
       if (field.name === 'color') {
         const span = document.createElement('span')
         span.style.backgroundColor = `${field.value}`
@@ -36,6 +41,17 @@ const createTableRow = (fields) => {
 
       tr.appendChild(td)
     })
+
+    const td = document.createElement('td')
+    const button = document.createElement('button')
+
+    td.className = `table-button`
+    button.textContent = 'apagar'
+    button.setAttribute('type', 'button')
+
+    button.addEventListener('click', (event) => deleteCar(event, id))
+    td.appendChild(button)
+    tr.appendChild(td)
   }
 
   return tr
@@ -67,6 +83,16 @@ const getCars = () => {
   return fetch(baseURL)
     .then((response) => response.json())
     .then((response) => renderTableRow(response))
+}
+
+const deleteCar = (event, id) => {
+  return fetch(baseURL, {
+    method: 'delete',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ plate: id })
+  })
+    .then((response) => response.json())
+    .then((response) => getCars())
 }
 
 form.addEventListener('submit', (event) => {
