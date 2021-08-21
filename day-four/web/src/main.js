@@ -82,6 +82,16 @@ form.addEventListener('submit', (event) => {
     color: target.elements.color
   }
 
+  if (
+    fields.image.value.length === 0 ||
+    fields.brandModel.value.length === 0 ||
+    fields.year.value.length === 0 ||
+    fields.plate.value.length === 0 ||
+    fields.color.value.length === 0
+  ) {
+    return error.textContent = 'Todos os campos são obrigatórios'
+  }
+
   fetch(baseURL, {
     method: 'post',
     headers: { 'content-type': 'application/json' },
