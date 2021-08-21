@@ -1,0 +1,174 @@
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.grid {
+  width: 100%;
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  grid-template-columns: 388px 1fr;
+  grid-template-areas: 'form table'
+}
+
+.grid-one {
+  grid-area: form;
+  padding: 0 32px;
+}
+
+.grid-two {
+  grid-area: table;
+  padding: 0 32px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form .group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.form .group label.floating {
+  position: absolute;
+  top: 50%; left: 8px;
+  transform: translateY(-50%);
+  padding: 0 8px;
+  cursor: text;
+  width: 80%;
+  background-color: white;
+  pointer-events: none;
+  transition: top 300ms ease, font 300ms ease;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form .group input:not([type='color']) {
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid #d3d3d3;
+  padding: 0 8px;
+}
+
+.form .group input:not([type='color']):focus,
+.form .group input:not([type='color']):valid {
+  outline: none;
+  border: 2px solid #5865F2;
+}
+
+.form .group input:not([type='color']):focus ~ label.floating,
+.form .group input:not([type='color']):valid ~ label.floating {
+  width: auto;
+  top: -2px;
+  font-size: 12px;
+  background-color: white;
+}
+
+.form .group label {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form .group input[type='color'] {
+	-webkit-appearance: none;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 4px;
+}
+
+.form .group .button {
+  width: 100%;
+  padding: 16px 0;
+  color: white;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #5865F2;
+}
+
+.form .group .button:hover {
+  filter:brightness(0.9)
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.table thead {
+  font-size: 14px;
+  background-color: #f9f9f9;
+}
+
+.table thead tr th {
+  padding: 12px 0;
+  color: #7a7a7a;
+}
+
+.table tbody tr td.table-color {
+  width: 12%;
+  text-align: center;
+}
+
+.table tbody tr {
+  border-bottom: 2px solid #f9f9f9;
+}
+
+.table tbody tr:last-child {
+  border-bottom: 0;
+}
+
+.table tbody tr td {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #2a2a2a;
+}
+
+.table tbody tr td.table-color span {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  border-radius: 999px;
+}
+
+
+.table tbody tr td.table-image {
+  width: 24%;
+  padding: 12px 24px
+}
+
+.table tbody tr td.table-image img {
+  max-width: 75%;
+}
+
+.table-empty {
+  padding: 24px 0;
+}

@@ -4,9 +4,59 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dia 4</title>
+    <title>Dia 3</title>
+    <link rel="stylesheet" href="/src/style.css">
   </head>
   <body>
-    <script type="module" src="/main.js"></script>
+    <div class="wrapper">
+      <div class="grid">
+        <div class="grid-one">
+          <form class="form" data-id="add-car">
+            <div class="group">
+              <input type="url" id="image" name="image" required>
+              <label class="floating" for="image">Url da imagem</label>
+            </div>
+            <div class="group">
+              <input type="text" id="brandModel" name="brandModel" required>
+              <label class="floating" for="brandModel">Marca/Modelo</label>
+            </div>
+            <div class="group">
+              <input type="number" id="year" name="year" required>
+              <label class="floating" for="model">Ano</label>
+            </div>
+            <div class="group">
+              <input type="text" id="plate" name="plate" required>
+              <label class="floating" for="plate">Placa</label>
+            </div>
+            <div class="group">
+              <label for="color">Selecione a cor</label>
+              <input type="color" id="color" name="color" required>
+            </div>
+            <div class="group">
+              <button class="button" type="submit">Adicionar</button>
+            </div>
+          </form>
+        </div>
+        <div class="grid-two">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Cor</th>
+                <th>Imagem</th>
+                <th>Modelo</th>
+                <th>Ano</th>
+                <th>Placa</th>
+              </tr>
+            </thead>
+            <tbody data-id="table">
+              <tr>
+                <td class="table-empty" colspan="5">Nenhum carro encontrado</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
