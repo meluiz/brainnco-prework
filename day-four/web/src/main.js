@@ -105,7 +105,11 @@ form.addEventListener('submit', (event) => {
   })
   .then((response) => response.json())
   .then((response) => {
-    if (!response.error) getCars()
+    error.textContent = ''
+
+    if (!response.error) return getCars()
+
+    error.textContent = response.message
   })
 
 })
