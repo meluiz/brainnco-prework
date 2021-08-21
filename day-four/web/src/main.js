@@ -106,7 +106,16 @@ form.addEventListener('submit', (event) => {
   .then((response) => {
     error.textContent = ''
 
-    if (!response.error) return getCars()
+
+    if (!response.error) {
+      fields.image.value = ''
+      fields.brandModel.value = ''
+      fields.year.value = ''
+      fields.plate.value = ''
+      fields.color.value = ''
+      target.elements[0].focus()
+      return getCars()
+    }
 
     error.textContent = response.message
   })
