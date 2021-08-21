@@ -3,6 +3,7 @@ const baseURL = 'http://localhost:3333/cars'
 
 const form = document.querySelector('[data-id=add-car]')
 const table = document.querySelector('[data-id=table]')
+const error = document.querySelector('[data-id=form-error]')
 
 const createTableRow = (fields) => {
   const tr = document.createElement('tr')
