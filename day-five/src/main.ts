@@ -3,11 +3,12 @@ import { get, post, del } from './http'
 
 
 const url = 'http://localhost:3333/cars'
-const form = document.querySelector('[data-id="add-car"]')
-const table = document.querySelector('[data-id="table"]')
+const form = document.querySelector<HTMLFormElement>('[data-id="add-car"]')
+const table = document.querySelector<HTMLTableElement>('[data-id="table"]')
 
-const getFormElement = (event: Event) => (elementName: string) => {
-  return event.target?.elements[elementName]
+type GetFormElement = (target: HTMLFormElement) => (elementName: string) => HTMLInputElement 
+const getFormElement: GetFormElement = (target) => (elementName) => {
+  return target?.namedItem(elementName)
 }
 
 const elementTypes = {
@@ -42,9 +43,12 @@ function createColor (value: string) {
   return td
 }
 
-form?.addEventListener('submit', async (e: Event) => {
+form?.addEventListener('submit', async (e) => {
   e.preventDefault()
-  const getElement = getFormElement(e)
+  const target = e.target as HTMLFormElement
+  const getElement = getFormElement(target)
+
+  if (!target) return
   
   const image = getElement('image')
   const data = {
@@ -69,33 +73,38 @@ form?.addEventListener('submit', async (e: Event) => {
 
   createTableRow(data)
 
-  e.target?.reset()
+  target.reset()
   image.focus()
 })
 
-type TableRowDataType = {
+type TableRowData = {
   image: string;
   brandModel: string;
-  year: number;
+  year: string;
   plate: string;
   color: string;
 }
 
-function createTableRow (data: TableRowDataType) {
+function createTableRow (data: TableRowData) {
   const elements = [
     { type: 'image', value: { src: data.image, alt: data.brandModel } },
     { type: 'text', value: data.brandModel },
     { type: 'text', value: data.year },
     { type: 'text', value: data.plate },
     { type: 'color', value: data.color }
-  ]
+  ] as const
 
   const tr = document.createElement('tr')
   tr.dataset.plate = data.plate
 
   elements.forEach((element) => {
-    const td = elementTypes[element.type](element.value)
-    tr.appendChild(td)
+    let td 
+
+    if (element.type === 'image') td = elementTypes.image(element.value)
+    if (element.type === 'text') td = elementTypes.text(element.value)
+    if (element.type === 'color') td = elementTypes.color(element.value)
+
+    if (td) tr.appendChild(td)
   })
 
   const button = document.createElement('button')
@@ -109,19 +118,19 @@ function createTableRow (data: TableRowDataType) {
   table?.appendChild(tr)
 }
 
-async function handleDelete (e: Event) {
-  const button = e.target as HTMLElement
-  const plate = button?.dataset?.plate
+async function handleDelete (e: MouseEvent) {
+  const button = e.target as HTMLButtonElement
+  const plate = button.dataset.plate
 
-  const result = await del(url, { plate })
+  const result = await del(url, { plate: plate ?? '' })
 
   if (result.error) {
     console.log('erro ao deletar', result.message)
     return
   }
 
-  const tr = document.querySelector(`tr[data-plate="${plate}"]`) as Element
-  table?.removeChild(tr)
+  const tr = document.querySelector<HTMLTableRowElement>(`tr[data-plate="${plate}"]`)
+  if (tr) table?.removeChild(tr)
   button?.removeEventListener('click', handleDelete)
 
   const allTrs = table?.querySelector('tr')
