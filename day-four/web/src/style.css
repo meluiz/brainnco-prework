@@ -176,6 +176,6 @@
   max-width: 75%;
 }
 
-.table-empty {
+.table tbody tr td.table-empty {
   padding: 24px 0;
 }
